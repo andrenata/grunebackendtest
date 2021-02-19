@@ -1,10 +1,10 @@
 @extends('backend/layout')
 @section('content')
 <section class="content-header">
-    <h1>User</h1>
+    <h1>Companies</h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">User</li>
+        <li class="active">Companies</li>
     </ol>
 </section>
 <!-- Main content -->
@@ -13,7 +13,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">List</h3>
+                    <h3 class="box-title">List Companies</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -47,7 +47,7 @@
 <!-- /.content -->
 @endsection
 
-@section('title', 'User | ' . env('APP_NAME',''))
+@section('title', 'Companies | ' . env('APP_NAME',''))
 
 @section('css-scripts')
 <!-- Tabulator css -->
@@ -60,5 +60,5 @@
 <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <!-- Tabulator js -->
 <script type="text/javascript" src="{{ asset('js/3rdparty/tabulator.min.js') }}"></script>
-<script src="{{ asset('js/backend/users/index.js') }}"></script>
+<script src="{{ asset('js/backend/companies/index.js') }}"></script>
 @endsection

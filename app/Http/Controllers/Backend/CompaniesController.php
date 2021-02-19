@@ -25,7 +25,16 @@ class CompaniesController extends Controller {
         return view('backend.companies.index');
         // echo "test";
     }
-
+    public function companiesadd() {
+        // echo "text";
+        $company = new Company();
+        $company->form_action = $this->getRoute() . '.create';
+        $company->page_title = 'Company Add Page';
+        $company->page_type = 'create';
+        return view('backend.companies.form', [
+            'company' => $company
+        ]);
+    }
    
 
 }
