@@ -28,20 +28,6 @@
                     @endif
                     {{ Form::open(array('route' => $company->form_action, 'method' => 'POST', 'files' => true, 'id' => 'company-form')) }}
                     {{ Form::hidden('id', $company->id, array('id' => 'company_id')) }}
-                    <div id="form-name" class="form-group">
-                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 col-header">
-                            <span class="label label-danger label-required">Required</span>
-                            <strong class="field-title">Name</strong>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-                            @if($company->page_type == 'create')
-                            {{ Form::text('name', $company->name, array('class' => 'form-control validate[required, regex[/^[\w-]*$/], alpha_num, maxSize[255]]', 'data-prompt-position' => 'bottomLeft:0,11')) }}
-                            @else
-                            {{ Form::text('name', $company->name, array('readonly' => 'readonly', 'class' => 'form-control validate[required, regex[/^[\w-]*$/], alpha_num, maxSize[255]]')) }}
-                            @endif
-                        </div>
-                    </div>
-
                     <div id="form-display-name" class="form-group {{ $company->page_type == 'edit'?'hide':'' }}">
                         <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 col-header">
                             <span class="label label-danger label-required">Required</span>
@@ -52,32 +38,136 @@
                         </div>
                     </div>
 
-                    @if($company->page_type == 'create')
-                    <div id="form-password" class="form-group">
+                    <div id="form-display-name" class="form-group {{ $company->page_type == 'edit'?'hide':'' }}">
                         <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 col-header">
                             <span class="label label-danger label-required">Required</span>
-                            <strong class="field-title">Password</strong>
+                            <strong class="field-title">Email</strong>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
-                            {{ Form::password('password', array('placeholder' => ' ', 'class' => 'form-control validate[required, minSize[6], maxSize[255]]', 'data-prompt-position' => 'bottomLeft:0,11')) }}
+                            {{ Form::email('display_email', $company->display_name, array('placeholder' => '', 'class' => 'form-control validate[required, email, maxSize[100]]', 'data-prompt-position' => 'bottomLeft:0,11')) }}
                         </div>
                     </div>
-                    @else
-                    <div id="form-password-confirm" class="form-group">
+
+
+                    <div id="form-display-name" class="form-group {{ $company->page_type == 'edit'?'hide':'' }}">
                         <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 col-header">
                             <span class="label label-danger label-required">Required</span>
-                            <i class="fa fa-question-circle tooltip-img" data-toggle="tooltip" data-placement="right" title="Please input only when changing the password."></i>
-                            <strong class="field-title">Password</strong>
+                            <strong class="field-title">Postcode</strong>
                         </div>
-                        <div class="col-xs-2 col-sm-2 col-md-1 col-lg-1 col-content">
-                            <button type="button" name="reset" id="reset-button" class="btn btn-primary">Change</button>
+                        <div class="col-xs-8 col-sm-8 col-md-6 col-lg-6 col-content">
+                            {{ Form::text('display_postcode', $company->display_name, array('placeholder' => '', 'class' => 'form-control validate[required, maxSize[100]]', 'data-prompt-position' => 'bottomLeft:0,11')) }}
+                            
                         </div>
-                        <div id="reset-field" class="col-xs-10 col-sm-10 col-md-8 col-lg-9 col-content hide">
-                            {{ Form::password('password', array('id' => 'password', 'placeholder' => 'Please input only when changing password', 'class' => 'form-control validate[minSize[6], maxSize[255]]', 'data-prompt-position' => 'bottomLeft:0,11', 'style' => 'margin-top:5px')) }}
-                            <label for="show-password"><input id="show-password" type="checkbox" name="show-password" value="1"> Show Password</label>
+                        <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2 col-content">
+                            <button class="btn btn-primary">Search</button>
                         </div>
                     </div>
-                    @endif
+
+                    <div id="form-display-name" class="form-group {{ $company->page_type == 'edit'?'hide':'' }}">
+                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 col-header">
+                            <span class="label label-danger label-required">Required</span>
+                            <strong class="field-title">Prefecture</strong>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
+                            {{ Form::select('display_prefecture', array('123' => 'Test', '456' => 'Test 2'), $company->display_name, array('placeholder' => '', 'class' => 'form-control validate[required, maxSize[100]]', 'data-prompt-position' => 'bottomLeft:0,11')) }}
+                        </div>
+                    </div>
+
+                    <div id="form-display-name" class="form-group {{ $company->page_type == 'edit'?'hide':'' }}">
+                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 col-header">
+                            <span class="label label-danger label-required">Required</span>
+                            <strong class="field-title">City</strong>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
+                            {{ Form::text('display_city', $company->display_name, array('placeholder' => '', 'class' => 'form-control validate[required, maxSize[100]]', 'data-prompt-position' => 'bottomLeft:0,11')) }}
+                        </div>
+                    </div>
+
+                    <div id="form-display-name" class="form-group {{ $company->page_type == 'edit'?'hide':'' }}">
+                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 col-header">
+                            <span class="label label-danger label-required">Required</span>
+                            <strong class="field-title">Local</strong>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
+                            {{ Form::text('display_local', $company->display_name, array('placeholder' => '', 'class' => 'form-control validate[required, maxSize[100]]', 'data-prompt-position' => 'bottomLeft:0,11')) }}
+                        </div>
+                    </div>
+
+                    <div id="form-display-name" class="form-group {{ $company->page_type == 'edit'?'hide':'' }}">
+                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 col-header">
+                            <strong class="field-title">Street Address</strong>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
+                            {{ Form::text('display_street', $company->display_name, array('placeholder' => '', 'class' => 'form-control validate[maxSize[100]]', 'data-prompt-position' => 'bottomLeft:0,11')) }}
+                        </div>
+                    </div>
+
+                    <div id="form-display-name" class="form-group {{ $company->page_type == 'edit'?'hide':'' }}">
+                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 col-header">
+                            <strong class="field-title">Business Hour</strong>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
+                            {{ Form::text('display_hour', $company->display_name, array('placeholder' => '', 'class' => 'form-control validate[maxSize[100]]', 'data-prompt-position' => 'bottomLeft:0,11')) }}
+                        </div>
+                    </div>
+
+                    <div id="form-display-name" class="form-group {{ $company->page_type == 'edit'?'hide':'' }}">
+                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 col-header">
+                            <strong class="field-title">Regular Holiday</strong>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
+                            {{ Form::text('display_holiday', $company->display_name, array('placeholder' => '', 'class' => 'form-control validate[maxSize[100]]', 'data-prompt-position' => 'bottomLeft:0,11')) }}
+                        </div>
+                    </div>
+
+                    <div id="form-display-name" class="form-group {{ $company->page_type == 'edit'?'hide':'' }}">
+                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 col-header">
+                            <strong class="field-title">Phone</strong>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
+                            {{ Form::text('display_phone', $company->display_name, array('placeholder' => '', 'class' => 'form-control validate[maxSize[100]]', 'data-prompt-position' => 'bottomLeft:0,11')) }}
+                        </div>
+                    </div>
+
+                    <div id="form-display-name" class="form-group {{ $company->page_type == 'edit'?'hide':'' }}">
+                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 col-header">
+                            <strong class="field-title">Fax</strong>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
+                            {{ Form::text('display_fax', $company->display_name, array('placeholder' => '', 'class' => 'form-control validate[maxSize[100]]', 'data-prompt-position' => 'bottomLeft:0,11')) }}
+                        </div>
+                    </div>
+
+                    <div id="form-display-name" class="form-group {{ $company->page_type == 'edit'?'hide':'' }}">
+                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 col-header">
+                            <strong class="field-title">URL</strong>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
+                            {{ Form::text('display_url', $company->display_name, array('placeholder' => '', 'class' => 'form-control validate[maxSize[100]]', 'data-prompt-position' => 'bottomLeft:0,11')) }}
+                        </div>
+                    </div>
+
+                    <div id="form-display-name" class="form-group {{ $company->page_type == 'edit'?'hide':'' }}">
+                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 col-header">
+                            <strong class="field-title">Licence Number</strong>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
+                            {{ Form::text('display_licence', $company->display_name, array('placeholder' => '', 'class' => 'form-control validate[maxSize[100]]', 'data-prompt-position' => 'bottomLeft:0,11')) }}
+                        </div>
+                    </div>
+
+                    <div id="form-display-name" class="form-group {{ $company->page_type == 'edit'?'hide':'' }}">
+                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-2 col-header">
+                            <span class="label label-danger label-required">Required</span>
+                            <strong class="field-title">Image</strong>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
+                            {{ Form::file('display_image', $company->display_name, array('placeholder' => '', 'class' => 'form-control validate[required, maxSize[100]]', 'data-prompt-position' => 'bottomLeft:0,11')) }}
+                            <span>Max size image 2MB</span>
+                        </div>
+                    </div>
+
+                   
 
                     <div id="form-button" class="form-group no-border">
                         <div class="col-xs-12 col-sm-12 col-md-12 text-center" style="margin-top: 20px;">
@@ -109,5 +199,5 @@
 <!-- validationEngine -->
 <script src="{{ asset('js/3rdparty/validation-engine/jquery.validationEngine-en.js') }}"></script>
 <script src="{{ asset('js/3rdparty/validation-engine/jquery.validationEngine.js') }}"></script>
-<script src="{{ asset('js/backend/companys/form.js') }}"></script>
+<script src="{{ asset('js/backend/companies/form.js') }}"></script>
 @endsection
