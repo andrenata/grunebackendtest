@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
+use App\Models\Postcode;
+use DB;
 use Config;
 
 class CompaniesController extends Controller {
@@ -28,12 +30,69 @@ class CompaniesController extends Controller {
     public function companiesadd() {
         // echo "text";
         $company = new Company();
-        $company->form_action = $this->getRoute() . '.create';
+        $company->form_action = $this->getRoute() . '.companies.create';
         $company->page_title = 'Company Add Page';
         $company->page_type = 'create';
-        return view('backend.companies.form', [
-            'company' => $company
+
+        $prefectures = DB::table('prefectures')->get();
+        
+        return view('backend.companies.form', array('company' => $company),
+                compact('prefectures'));
+    }
+
+    public function create(Request $request){
+        $datacompany = $request->all();
+
+        $companycreate = DB::table('companies')->insertGetId([
+            'name' => $datacompany['display_name'],
+            'email' => $datacompany['display_email'],
+            'prefecture_id' => $datacompany['display_prefecture'],
+            'phone' => $datacompany['display_phone'],
+            'postcode' => $datacompany['display_postcode'],
+            'city' => $datacompany['display_city'],
+            'local' => $datacompany['display_local'],
+            'street_address' => $datacompany['display_street'],
+            'business_hour' => $datacompany['display_hour'],
+            'regular_holiday' => $datacompany['display_holiday'],
+            'fax' => $datacompany['display_fax'],
+            'url' => $datacompany['display_url'],
+            'license_number' => $datacompany['display_licence']
         ]);
+
+        if($companycreate){
+
+            // PHOTO
+            $image = $request->file('display_image');
+            $imageName = 'image_'.$companycreate.'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('uploads/files');
+            $image->move($destinationPath, $imageName);
+
+            $update = DB::table('companies')->where('id', '=', $companycreate)
+                        ->update([
+                            'image' => $imageName
+            ]);
+
+            if($update){
+                return redirect()->route('companies')
+                    ->with('success', 'Add Company Success!');
+            }else{
+                return redirect()->back()->withInput()
+                            ->with('success', 'Please Try Again!');
+            }
+        }else{
+            return redirect()->back()->withInput()
+                        ->with('success', 'Please Try Again!');
+        }
+    }
+
+    public function postcode(Request $request) {
+
+        // $company = Postcode::find(1);
+        $company = DB::table('postcode')
+                ->where('postcode', '=', $code)
+                ->get();
+        return response()->json($company, 200);
+        // echo "test";
     }
    
 
