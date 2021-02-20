@@ -54,31 +54,13 @@
                             <span class="label label-danger label-required">Required</span>
                             <strong class="field-title">Postcode</strong>
                         </div>
-                        <div class="col-xs-8 col-sm-8 col-md-6 col-lg-6 col-content">
-                            {{ Form::text('display_postcode', $company->postcode, array('placeholder' => '', 'class' => 'form-control validate[required, maxSize[100]]', 'data-prompt-position' => 'bottomLeft:0,11')) }}
-                            
-                        </div>
-                        <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2 col-content">
-                            <a href="#" id="getData" class="btn btn-primary">Search</a>
+                        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-10 col-content">
+                            {{ Form::text('display_postcode', $company->postcode, array('placeholder' => '', 'id' => 'postcode', 'class' => 'form-control validate[required, maxSize[100]]', 'data-prompt-position' => 'bottomLeft:0,11')) }}
+                            <div id="div1"></div>
                         </div>
                     </div>
 
-                    <script>
-                        // $('#getData').on('click', function(e){
-                            $("#getData").click(function() { 
-                                var value = $(this).attr('display_postcode'); // get value
-                                $.ajax({  //create an ajax request to display.php
-                                    type: "GET",
-                                    url: "/postcode", 
-                                    data: {'stdid': value},      
-                                    success:(
-                                            alert(value);
-                                    )                     
-                                }); 
-                            });
-                        // });
-                    </script>
-
+                    
                     <div id="name"></div>
 
                     <div id="form-display-name" class="form-group">
@@ -221,4 +203,6 @@
 <script src="{{ asset('js/3rdparty/validation-engine/jquery.validationEngine-en.js') }}"></script>
 <script src="{{ asset('js/3rdparty/validation-engine/jquery.validationEngine.js') }}"></script>
 <script src="{{ asset('js/backend/companies/form.js') }}"></script>
+
+
 @endsection

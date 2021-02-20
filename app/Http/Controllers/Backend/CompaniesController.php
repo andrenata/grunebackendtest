@@ -165,15 +165,7 @@ class CompaniesController extends Controller {
         }
     }
 
-    public function postcode(Request $request) {
-
-        // $company = Postcode::find(1);
-        $company = DB::table('postcode')
-                ->where('postcode', '=', $code)
-                ->get();
-        return response()->json($company, 200);
-        // echo "test";
-    }
+    
    
 
 }
