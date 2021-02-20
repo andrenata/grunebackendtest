@@ -85,6 +85,75 @@ class CompaniesController extends Controller {
         }
     }
 
+    public function edit($id) {
+        $company = Company::find($id);
+        $company->form_action = $this->getRoute() . '.companies.update';
+        $company->page_title = 'Company Edit Page';
+
+        $company->page_type = 'edit';
+
+        $prefectures = DB::table('prefectures')->get();
+        
+        return view('backend.companies.form', array('company' => $company),
+                compact('prefectures'));
+    }
+
+    public function update(Request $request) {
+        $datacompany = $request->all();
+        $id = $request->get('id');
+
+        $companny = DB::table('companies')->find($id);
+
+        if($companny){
+            $update = DB::table('companies')->where('id', '=', $id)
+                    ->update([
+                        'name' => $datacompany['display_name'],
+                        'email' => $datacompany['display_email'],
+                        'prefecture_id' => $datacompany['display_prefecture'],
+                        'phone' => $datacompany['display_phone'],
+                        'postcode' => $datacompany['display_postcode'],
+                        'city' => $datacompany['display_city'],
+                        'local' => $datacompany['display_local'],
+                        'street_address' => $datacompany['display_street'],
+                        'business_hour' => $datacompany['display_hour'],
+                        'regular_holiday' => $datacompany['display_holiday'],
+                        'fax' => $datacompany['display_fax'],
+                        'url' => $datacompany['display_url'],
+                        'license_number' => $datacompany['display_licence']
+            ]);
+            
+            if(!empty($datacompany['display_image'])){
+                // PHOTO
+                $image = $request->file('display_image');
+                $imageName = 'image_'.$id.'.'.$image->getClientOriginalExtension();
+                $destinationPath = public_path('uploads/files');
+                $image->move($destinationPath, $imageName);
+
+                $updateimage = DB::table('companies')->where('id', '=', $id)
+                            ->update([
+                                'image' => $imageName
+                ]);
+
+                // if($updateimage){
+                //     return redirect()->route('companies')
+                //         ->with('success', 'Update Company Success!');
+                // }else{
+                //     return redirect()->route($this->getRoute())->with('error', Config::get('const.FAILED_UPDATE_MESSAGE'));
+                // }
+            }
+
+            
+            
+            return redirect()->route('companies')
+                ->with('success', 'Update Company Success!');
+            
+        }else{
+            return redirect()->back()->withInput()
+                            ->with('success', 'Please Try Again!');
+        }
+        
+    }
+
     public function postcode(Request $request) {
 
         // $company = Postcode::find(1);
