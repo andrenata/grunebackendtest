@@ -133,16 +133,7 @@ class CompaniesController extends Controller {
                             ->update([
                                 'image' => $imageName
                 ]);
-
-                // if($updateimage){
-                //     return redirect()->route('companies')
-                //         ->with('success', 'Update Company Success!');
-                // }else{
-                //     return redirect()->route($this->getRoute())->with('error', Config::get('const.FAILED_UPDATE_MESSAGE'));
-                // }
             }
-
-            
             
             return redirect()->route('companies')
                 ->with('success', 'Update Company Success!');
@@ -152,6 +143,26 @@ class CompaniesController extends Controller {
                             ->with('success', 'Please Try Again!');
         }
         
+    }
+
+    public function delete(Request $request) {
+        $company = Company::find($request->get('id'));
+
+        if($company){
+            // Delete
+            $del = $company->delete();
+
+            if($del){
+                return redirect()->route('companies')
+                    ->with('success', 'Delete Company Success!');
+            }else{
+                return redirect()->route('companies')
+                    ->with('success', 'Delete Company failed!');
+            }
+        }else{
+            return redirect()->route('companies')
+                ->with('success', 'Delete Company failed!');
+        }
     }
 
     public function postcode(Request $request) {

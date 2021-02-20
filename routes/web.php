@@ -59,5 +59,5 @@ Route::GROUP(['middleware' => ['auth:user']], function() {
     Route::POST('/admin/companies/create', 'Backend\CompaniesController@create')->name('admin.companies.create');
     Route::GET('/admin/companies/edit/{id}', 'Backend\CompaniesController@edit')->name('admin.companies.edit');
     Route::POST('/admin/companies/update', 'Backend\CompaniesController@update')->name('admin.companies.update');
-    // Route::GET('/admin/companies/delete', 'Backend\CompaniesController@delete')->name('companies.delete');
+    Route::GET('/admin/companies/delete', 'Backend\CompaniesController@delete')->name('admin.companies.delete');
 });
