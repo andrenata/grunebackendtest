@@ -165,7 +165,19 @@ class CompaniesController extends Controller {
         }
     }
 
-    
+    public function postcode($id){
+        // $postcode = Postcode::find($id);
+        // $postcode = DB::table('postcodes')
+        //         ->where('postcode', '=', $id)
+        //         ->get();
+
+        $postcode = DB::table('postcodes')
+                ->join('prefectures','prefectures.display_name','=','postcodes.prefecture')
+                ->where('postcode', '=', $id)
+                ->get();
+ 
+        return $postcode->toJson();
+    }
    
 
 }

@@ -815,6 +815,11 @@ input[type=search] {
   font-weight: bold;
 }
 
+.flexImage {
+    display: flex;
+    text-align: center;
+}
+
 @media only screen and (max-width:991px){
     .form-group {
         display: block;
